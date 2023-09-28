@@ -19,12 +19,14 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
         elif event.type == SDL_MOUSEMOTION:
-            mouse_x, mouse_y = event.x, event.y
+            global mouse_x, mouse_y
+            mouse_x, mouse_y = event.x, TUK_HEIGHT - 1 - event.y
         elif event.type == SDL_MOUSEBUTTONDOWN:
-            hand_points.append((event.x, event.y))
+            hand_points.append((event.x, TUK_HEIGHT - 1 - event.y))
 
 running = True
 keroro_x, keroro_y  = TUK_WIDTH // 2, TUK_HEIGHT // 2
+mouse_x, mouse_y = 0, 0
 hand_x, hand_y = 400, 300
 hide_cursor()
 frame = 0
@@ -33,6 +35,7 @@ i = 0
 while running:
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
+    hand.draw(mouse_x, mouse_y)
     for p in range(len(hand_points)):
         hand.draw(hand_points[p][0], hand_points[p][1])
     if i < 100:
