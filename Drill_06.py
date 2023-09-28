@@ -38,15 +38,15 @@ while running:
     hand.draw(mouse_x, mouse_y)
     for p in range(len(hand_points)):
         hand.draw(hand_points[p][0], hand_points[p][1])
-    if i < 100:
+    if i < 100 and len(hand_points) > 0:
         t = i / 100
         x = (1 - t) * keroro_x + t * hand_points[0][0]
         y = (1 - t) * keroro_y + t * hand_points[0][1]
         i += 4
-    elif i > 100:
+    elif i >= 100:
         i = 0
         keroro_x, keroro_y = hand_points[0][0], hand_points[0][1]
-        hand_points.remove(hand_points[0])
+        hand_points.pop(0)
 
     keroro_left_down.clip_draw(frame * 260, 0, 260, 350, x, y, 125, 160)
     update_canvas()
