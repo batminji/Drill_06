@@ -6,6 +6,9 @@ open_canvas(TUK_WIDTH, TUK_HEIGHT)
 
 hand = load_image('hand_arrow.png')
 keroro_left_down = load_image('keroro_left_down.png')
+keroro_right_down = load_image('keroro_right_down.png')
+keroro_left_up = load_image('keroro_left_up.png')
+keroro_right_up = load_image('keroro_right_up.png')
 TUK_ground = load_image('TUK_GROUND.png')
 
 hand_points = [(600, 800)]
@@ -48,7 +51,18 @@ while running:
         keroro_x, keroro_y = hand_points[0][0], hand_points[0][1]
         hand_points.pop(0)
 
-    keroro_left_down.clip_draw(frame * 260, 0, 260, 350, x, y, 125, 160)
+    if len(hand_points) > 0:
+        if hand_points[0][0] > keroro_x and hand_points[0][1] > keroro_y:
+            keroro_right_up.clip_draw(frame * 290, 0, 290, 345, x, y, 125, 160)
+        elif hand_points[0][0] < keroro_x and hand_points[0][1] > keroro_y:
+            keroro_left_up.clip_draw(frame * 290, 0, 290, 345, x, y, 125, 160)
+        elif hand_points[0][0] > keroro_x and hand_points[0][1] < keroro_y:
+            keroro_right_down.clip_draw(frame * 260, 0, 260, 350, x, y, 125, 160)
+        elif hand_points[0][0] < keroro_x and hand_points[0][1] < keroro_y:
+            keroro_left_down.clip_draw(frame * 260, 0, 260, 350, x, y, 125, 160)
+    else:
+        keroro_left_down.clip_draw(frame * 260, 0, 260, 350, x, y, 125, 160)
+
     update_canvas()
     frame = (frame + 1) % 4
     delay(0.08)
